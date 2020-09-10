@@ -37,7 +37,7 @@ const Dashboard: React.FC = () => {
     async function loadTransactions(): Promise<void> {
       api.get('/transactions').then( response => {
         const transactions = response.data;
-
+        console.log(transactions.transactions)
         setTransactions(transactions.transactions);
         setBalance(transactions.balance);
       })
@@ -86,22 +86,19 @@ const Dashboard: React.FC = () => {
               </tr>
             </thead>
 
-          {transactions.map( transaction => {
-            //eslint-disable-next-line
-            return(
-              <tbody key={transaction.id}>
-                <tr>
-                  <td className="title">{transaction.title}</td>
-                  <td className="income">R$ {transaction.value}</td>
-                  <td>{transaction.category}</td>
-                  <td>{transaction.created_at}</td>
-                </tr>
-              </tbody>
-
-            )
-
-          })}
-
+            {transactions.map( transaction => {
+              //eslint-disable-next-line
+                return(
+                    <tbody key={transaction.id}>
+                      <tr>
+                        <td className="title" >{transaction.title}</td>
+                        <td className={transaction.type}>R$ {transaction.value}</td>
+                        <td>{transaction.category.title}</td>
+                        <td>{transaction.created_at}</td>
+                      </tr>
+                    </tbody>
+                  )
+              })}
           </table>
         </TableContainer>
       </Container>
