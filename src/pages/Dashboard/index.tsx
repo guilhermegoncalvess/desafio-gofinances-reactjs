@@ -37,7 +37,7 @@ const Dashboard: React.FC = () => {
     async function loadTransactions(): Promise<void> {
       api.get('/transactions').then( response => {
         const transactions = response.data;
-        console.log(transactions.transactions)
+
         setTransactions(transactions.transactions);
         setBalance(transactions.balance);
       })
