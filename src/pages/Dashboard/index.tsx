@@ -24,9 +24,9 @@ interface Transaction {
 }
 
 interface Balance {
-  income: number;
-  outcome: number;
-  total: number;
+  income: string;
+  outcome: string;
+  total: string;
 }
 
 const Dashboard: React.FC = () => {
@@ -57,21 +57,21 @@ const Dashboard: React.FC = () => {
               <p>Entradas</p>
               <img src={income} alt="Income" />
             </header>
-            <h1 data-testid="balance-income">R$ {formatValue(balance.income)}</h1>
+            <h1 data-testid="balance-income">{formatValue(Number(balance.income))}</h1>
           </Card>
           <Card>
             <header>
               <p>Saídas</p>
               <img src={outcome} alt="Outcome" />
             </header>
-            <h1 data-testid="balance-outcome">R$ {formatValue(balance.outcome)}</h1>
+            <h1 data-testid="balance-outcome">{formatValue(Number(balance.outcome))}</h1>
           </Card>
           <Card total>
             <header>
               <p>Total</p>
               <img src={total} alt="Total" />
             </header>
-            <h1 data-testid="balance-total">R$ {formatValue(balance.total)}</h1>
+            <h1 data-testid="balance-total">{formatValue(Number(balance.total))}</h1>
           </Card>
         </CardContainer>
 
@@ -92,7 +92,12 @@ const Dashboard: React.FC = () => {
                     <tbody key={transaction.id}>
                       <tr>
                         <td className="title" >{transaction.title}</td>
-                        <td className={transaction.type}>R$ {transaction.value}</td>
+                        {
+                          transaction.type  === "outcome"
+                            ? <td className={transaction.type}> - {formatValue(Number(transaction.value))}</td>
+                            : <td className={transaction.type}>{formatValue(Number(transaction.value))}</td>
+                        }
+
                         <td>{transaction.category.title}</td>
                         <td>{transaction.created_at}</td>
                       </tr>
